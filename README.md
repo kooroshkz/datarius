@@ -1,1 +1,3 @@
 # datarious
+
+Database course project
