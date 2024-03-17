@@ -1,8 +1,9 @@
 # datarious
 
 Database course project
-\todo
+
+# TODO
 add attributes to property:
--area
--construction year
--Diego updates the ER Diagram
+- area
+- construction year
+- Diego updates the ER Diagram
