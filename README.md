@@ -37,3 +37,25 @@ add attributes to property:
 - properties can have 0 or more tenants
 - a housing contract is a relation between a landlord, tenants and optionally a housing agency
 - tenants can also be resident assistants and residents, a resident assistant manages a group of residents
+
+## Bonus points
+
+(Bonus, 2p) Include aggregation or ternary relation. (Already added)
+(Bonus, 2p) Include the translation of aggregation or ternary relation. Could you capture all the constraints? If you cannot capture some constraints, explain why.
+
+## Queries
+
+### Queries Requirements:
+Include one example of each of the following:
+i. GROUP BY ... HAVING
+ii. Set operation (UNION, INTERSECT, EXCEPT)
+iii. Nested query or correlation
+iv. Aggregation (MAX, AVG, SUM, COUNT)
+v. Query over multiple tables (JOIN)
+vi. LIKE (string matching)
+Please specify distinct queries for each category. Otherwise, we will
+only score one of the categories.
+For each query, please briefly explain what it computes. Without an
+explanation, you will not earn any points for that query.
+(Bonus#1,3p) Is there a challenging query you wish to show us?
+(Bonus#2,3p) Is there a challenging query you wish to show us?
