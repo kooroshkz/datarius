@@ -39,10 +39,11 @@ area TEXT);
 --create table with property attributes
 DROP TABLE IF EXISTS Properties;
 CREATE TABLE Properties(
-address TEXT, postcode TEXT, 
+paddress TEXT, postcode TEXT,
 rent INTEGER, rooms INTEGER, 
-is_furnished BOOLEAN, 
-PRIMARY KEY(address, postcode));
+is_furnished BOOLEAN,
+PRIMARY KEY(paddress, postcode));
+
 
 .import datasets/Properties.csv Properties
 
@@ -63,22 +64,24 @@ PRIMARY KEY(address, postcode));
 
 DROP TABLE IF EXISTS Flats;
 CREATE TABLE Flats(
-address TEXT, postcode TEXT,
+paddress TEXT, postcode TEXT,
 floor_number INTEGER, own_kitchen BOOLEAN,
-PRIMARY KEY(address, postcode), 
-FOREIGN KEY(address, postcode) 
-REFERENCES Properties(address, postcode));
+PRIMARY KEY(paddress, postcode), 
+FOREIGN KEY(paddress, postcode) 
+REFERENCES Properties(paddress, postcode)
+ON DELETE CASCADE);
 
 .import datasets/Flats.csv Flats
 
 
 DROP TABLE IF EXISTS Houses;
 CREATE TABLE Houses(
-address TEXT, postcode TEXT,
+paddress TEXT, postcode TEXT,
 garden BOOLEAN, garage BOOLEAN,
-PRIMARY KEY(address, postcode),
-FOREIGN KEY(address, postcode) 
-REFERENCES Properties(address, postcode));
+PRIMARY KEY(paddress, postcode),
+FOREIGN KEY(paddress, postcode) 
+REFERENCES Properties(paddress, postcode)
+ON DELETE CASCADE);
 
 .import datasets/Houses.csv Houses
 
@@ -91,17 +94,18 @@ REFERENCES Properties(address, postcode));
 --for foreign keys with multiple columns
 DROP TABLE IF EXISTS Manages;
 CREATE TABLE Manages(
-lssn INTEGER, address TEXT, 
+lssn INTEGER, paddress TEXT, 
 postcode TEXT,
-PRIMARY KEY(lssn, address, postcode),
+PRIMARY KEY(lssn, paddress, postcode),
 FOREIGN KEY(lssn) REFERENCES Landlords(lssn),
-FOREIGN KEY(address, postcode) 
-REFERENCES Properties(address, postcode)
+FOREIGN KEY(paddress, postcode) 
+REFERENCES Properties(paddress, postcode)
 ON DELETE CASCADE);
 
 
 --SELF-JOIN with roles
 --resident assistants and residents (for tenants)
+--there is an RA for a certain group of tenants
 --TODO comment needed
 DROP TABLE IF EXISTS Assists;
 CREATE TABLE Assists(
@@ -151,11 +155,3 @@ REFERENCES Contracts(cid);
 --bonus things
 --TERNARY RELATIONSHIP
 --TODO (optional)
-
-
-
-
-
-
-
-
