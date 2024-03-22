@@ -14,7 +14,7 @@ sqlite3 assignment_database_update.db < assignment_ddl.sql
 ## ER Diagram
 Last Update 17 March
 
-![ERD](files/ERD.png)
+![ERD](files/ERD.jpg)
 
 ## TODO
 add attributes to property:

@@ -22,6 +22,14 @@ job TEXT, phone INTEGER, email TEXT NOT NULL);
 
 .import datasets/Tenants.csv Tenants
 
+--WEAK ENTITY SET
+DROP TABLE IF EXISTS EmergencyContacts;
+CREATE TABLE EmergencyContacts(
+    ename TEXT NOT NULL,
+    ephone INTEGER, 
+    lssn INTEGER UNIQUE,
+    PRIMARY KEY(ephone, lssn),
+    FOREIGN KEY(lssn) REFERENCES Landlords(lssn) ON DELETE CASCADE);
 
 --emails are set to not null because we need them for communication
 --as well as names
@@ -29,25 +37,24 @@ job TEXT, phone INTEGER, email TEXT NOT NULL);
 
 --create table for housing agencies
 DROP TABLE IF EXISTS HousingAgency;
-CREATE TABLE HousingAgency(
-a_name TEXT PRIMARY KEY,
-website TEXT,
-area TEXT);
+    CREATE TABLE HousingAgency(
+    a_name TEXT PRIMARY KEY,
+    website TEXT,
+    area TEXT);
 
 .import datasets/HousingAgency.csv HousingAgency
 
 --create table with property attributes
-DROP TABLE IF EXISTS Properties;
-CREATE TABLE Properties(
+DROP TABLE IF EXISTS Property_Manages;
+CREATE TABLE Property_Manages(
 paddress TEXT, postcode TEXT,
 rent INTEGER, rooms INTEGER, 
 is_furnished BOOLEAN,
 PRIMARY KEY(paddress, postcode));
 
 
-.import datasets/Properties.csv Properties
 
---use inheritance to create flats and houses (IS-A relationship with properties)
+--use inheritance to create flats and houses (IS-A relationship with Property_Manages)
 
 --(COMMENT TO TEAM) I also added the floor attribute to distingish it from
 --houses
@@ -68,7 +75,7 @@ paddress TEXT, postcode TEXT,
 floor_number INTEGER, own_kitchen BOOLEAN,
 PRIMARY KEY(paddress, postcode), 
 FOREIGN KEY(paddress, postcode) 
-REFERENCES Properties(paddress, postcode)
+REFERENCES Property_Manages(paddress, postcode)
 ON DELETE CASCADE);
 
 .import datasets/Flats.csv Flats
@@ -80,7 +87,7 @@ paddress TEXT, postcode TEXT,
 garden BOOLEAN, garage BOOLEAN,
 PRIMARY KEY(paddress, postcode),
 FOREIGN KEY(paddress, postcode) 
-REFERENCES Properties(paddress, postcode)
+REFERENCES Property_Manages(paddress, postcode)
 ON DELETE CASCADE);
 
 .import datasets/Houses.csv Houses
@@ -89,18 +96,15 @@ ON DELETE CASCADE);
 
 
 --WEAK ENTITY SET
---landlords manage properties
---(NOTE TO TEAM) sqlite does not support ON DELETE CASCADE
---for foreign keys with multiple columns
-DROP TABLE IF EXISTS Manages;
-CREATE TABLE Manages(
-lssn INTEGER, paddress TEXT, 
-postcode TEXT,
-PRIMARY KEY(lssn, paddress, postcode),
-FOREIGN KEY(lssn) REFERENCES Landlords(lssn),
-FOREIGN KEY(paddress, postcode) 
-REFERENCES Properties(paddress, postcode)
-ON DELETE CASCADE);
+--landlords manage Property_Manages
+
+
+--modify the property to model 1 to many
+--relationship with landlords
+ALTER TABLE Property_Manages
+ADD COLUMN lssn INTEGER;
+
+
 
 
 --SELF-JOIN with roles
@@ -144,13 +148,15 @@ ADD COLUMN cid INTEGER
 REFERENCES Contracts(cid);
 
 
---properties can be in one contract (different tenants
+--Property_Manages can be in one contract (different tenants
 --living in one property have the same cid so no problem here)
-ALTER TABLE Properties
+ALTER TABLE Property_Manages
 ADD COLUMN cid INTEGER
 REFERENCES Contracts(cid);
 
 
+.import datasets/Property_Manages.csv Property_Manages
+.import datasets/Contracts.csv Contracts
 
 --bonus things
 --TERNARY RELATIONSHIP
