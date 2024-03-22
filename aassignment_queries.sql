@@ -15,13 +15,6 @@ SELECT name FROM Tenants;
 It returns a list of all unique names from both tables so we can say those are
 our platform real live users. */
 
-
--- INTERSECT
-SELECT name FROM Landlords
-INTERSECT
-SELECT name FROM Tenants;
-/* This query retrieves the names of individuals who are both landlords and tenants. */
-
 -- EXCEPT
 SELECT name
 FROM Landlords
@@ -30,6 +23,12 @@ SELECT name
 FROM Tenants;
 /* This query retrieves the names of individuals who are landlords but not tenants.
 It returns a list of names belonging to individuals who are landlords but are not listed as tenants in the database.*/
+
+-- INTERSECT
+SELECT name FROM Landlords
+INTERSECT
+SELECT name FROM Tenants;
+/* This query retrieves the names of individuals who are both landlords and tenants. */
 
 -- Nested query or correlation
 SELECT paddress, rent
