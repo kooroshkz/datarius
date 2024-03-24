@@ -227,9 +227,7 @@ FOREIGN KEY(a_name) REFERENCES HousingAgency(a_name));
 
 
 --combined total participation and key constraint
-ALTER TABLE Tenants
-ADD COLUMN cid INTEGER
-REFERENCES Contracts(cid);
+
 
 
 --Property_Manages can be in one contract (different tenants
