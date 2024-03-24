@@ -4,7 +4,9 @@ DROP TABLE IF EXISTS Landlords;
 CREATE TABLE Landlords(
 lssn INTEGER PRIMARY KEY, 
 name TEXT NOT NULL, 
-job TEXT, phone INTEGER, email TEXT NOT NULL);
+job TEXT, 
+phone INTEGER, 
+email TEXT NOT NULL);
 
 INSERT INTO Landlords (lssn, name, job, phone, email) VALUES
 (2984, 'Laura Smith', 'Engineer', 0694829475, 'laurasmith@email.com'),
