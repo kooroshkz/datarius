@@ -189,7 +189,8 @@ INSERT INTO Houses (paddress, postcode, garden, garage) VALUES
 --modify the property to model 1 to many
 --relationship with landlords
 ALTER TABLE Property_Manages
-ADD COLUMN lssn INTEGER;
+ADD COLUMN lssn INTEGER 
+REFERENCES Landlords(lssn);
 
 
 --SELF-JOIN with roles
