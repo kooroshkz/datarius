@@ -238,64 +238,59 @@ CREATE TABLE Contracts(
 cid INTEGER PRIMARY KEY,
 lssn INTEGER NOT NULL,
 a_name TEXT,
+paddress TEXT NOT NULL,
+postcode TEXT NOT NULL,
 FOREIGN KEY(lssn) REFERENCES Landlords(lssn),
-FOREIGN KEY(a_name) REFERENCES HousingAgency(a_name));
+FOREIGN KEY(a_name) REFERENCES HousingAgency(a_name)
+FOREIGN KEY(paddress, postcode) REFERENCES Property_Manages(paddress, postcode));
 
 
 --combined total participation and key constraint
 
 
 
---Property_Manages can be in one contract (different tenants
---living in one property have the same cid so no problem here)
-ALTER TABLE Property_Manages
-ADD COLUMN cid INTEGER
-REFERENCES Contracts(cid);
+INSERT INTO Property_Manages (paddress, postcode, rent, rooms, is_furnished, lssn) VALUES 
+('Steenstraat 35','2312 BT Leiden',845,2,1,1195),
+('Hooigracht 78','2312 KP Leiden',800,1,1,2989),
+('Oude Singel 33','2333 GH Leiden',710,1,1,2993),
+('Beestenmarkt 44','2313 XY Leiden',1480,3,1,2987),
+('Hogewoerd 21','2311 HC Leiden',690,1,1,2987),
+('Dorpstraat 14','2333 AD Leiden',490,1,0,2988),
+('Jan van Goyenkade 29','2311 AD Leiden',1520,3,1,8392),
+('Oosterkerkstraat 6','2313 RV Leiden',670,1,1,2991),
+('Kolfmakersteeg 4','2312 TA Leiden',1640,3,1,2993),
+('Vrouwensteeg 8','2312 DM Leiden',720,1,1,2988),
+('Bargelaan 25','2333 CT Leiden',1570,3,1,1195),
+('Diefsteeg 17','2311 TW Leiden',680,1,1,2988),
+('Oude Rijn 41','2312 HG Leiden',1530,3,1,2564),
+('Vismarkt 10','2332 LJ Leiden',1490,3,1,2),
+('Kerkstraat 7','2312 BH Leiden',900,2,1,7997),
+('Nieuwstraat 14','2315 EA Leiden',1200,2,1,5666),
+('Schelpenkade 9','2333 ZZ Leiden',1100,2,1,2999),
+('Langegracht 5','2312 VA Leiden',980,2,1,3575),
+('Molenstraat 12','2315 JK Leiden',920,2,1,5455),
+('Achterom 8','2311 TV Leiden',1000,2,1,9658),
+('Vestestraat 16','2312 SH Leiden',940,2,1,5425),
+('Hoge Woerd 20','2312 HJ Leiden',950,2,1,3201);
 
-
-INSERT INTO Property_Manages (paddress, postcode, rent, rooms, is_furnished, lssn, cid) VALUES 
-('Steenstraat 35','2312 BT Leiden',845,2,1,1195,269),
-('Hooigracht 78','2312 KP Leiden',800,1,1,2989,785),
-('Oude Singel 33','2333 GH Leiden',710,1,1,2993,821),
-('Beestenmarkt 44','2313 XY Leiden',1480,3,1,2987,742),
-('Hogewoerd 21','2311 HC Leiden',690,1,1,2987,NULL),
-('Dorpstraat 14','2333 AD Leiden',490,1,0,2988,NULL),
-('Jan van Goyenkade 29','2311 AD Leiden',1520,3,1,8392,413),
-('Oosterkerkstraat 6','2313 RV Leiden',670,1,1,2991,626),
-('Kolfmakersteeg 4','2312 TA Leiden',1640,3,1,2993,821),
-('Vrouwensteeg 8','2312 DM Leiden',720,1,1,2988,NULL),
-('Bargelaan 25','2333 CT Leiden',1570,3,1,1195,472),
-('Diefsteeg 17','2311 TW Leiden',680,1,1,2988,199),
-('Oude Rijn 41','2312 HG Leiden',1530,3,1,2564,823),
-('Vismarkt 10','2332 LJ Leiden',1490,3,1,2,982),
-('Kerkstraat 7','2312 BH Leiden',900,2,1,7997,601),
-('Nieuwstraat 14','2315 EA Leiden',1200,2,1,5666,428),
-('Schelpenkade 9','2333 ZZ Leiden',1100,2,1,2999,695),
-('Langegracht 5','2312 VA Leiden',980,2,1,3575,185),
-('Molenstraat 12','2315 JK Leiden',920,2,1,5455,437),
-('Achterom 8','2311 TV Leiden',1000,2,1,9658,374),
-('Vestestraat 16','2312 SH Leiden',940,2,1,5425,805),
-('Hoge Woerd 20','2312 HJ Leiden',950,2,1,3201,249);
-
-INSERT INTO Contracts (cid, lssn, a_name) VALUES 
-(538,3001,'De Huurbaas'),
-(714,2564,'Woning Wereld'),
-(269,1195,'Huis Huren'),
-(785,2989,'De Makelaar'),
-(413,8392,'Huur Expert'),
-(626,2991,'PandPlaats'),
-(821,2993,'Huur Winkel'),
-(472,1195,'Woon Expertise'),
-(199,2988,'KamerGemak'),
-(823,2564,'HuisVinder'),
-(982,3002,'De Huurdbaas'),
-(601,7997,'Woning Wereld'),
-(428,5666,'Huis Huren'),
-(695,2999,'De Makelaar'),
-(185,3575,'Huur Expert'),
-(742,2987,'PandPlaats'),
-(437,5455,'Huur Winkel'),
-(374,9658,'Woon Expertise'),
-(805,5425,'KamerGemak'),
-(249,3201,'HuisVinder');
+INSERT INTO Contracts (cid, lssn, a_name, paddress, postcode) VALUES 
+(269, 1195, 'Huis Huren', 'Steenstraat 35', '2312 BT Leiden'),
+(785, 2989, 'De Makelaar', 'Hooigracht 78', '2312 KP Leiden'),
+(696, 2993, 'Huur Winkel', 'Oude Singel 33', '2333 GH Leiden'),
+(742, 2987, 'PandPlaats', 'Beestenmarkt 44', '2313 XY Leiden'),
+(413, 8392, 'Huur Expert', 'Jan van Goyenkade 29', '2311 AD Leiden'),
+(626, 2991, 'PandPlaats', 'Oosterkerkstraat 6', '2313 RV Leiden'),
+(821, 2993, 'Huur Winkel', 'Kolfmakersteeg 4', '2312 TA Leiden'),
+(472, 1195, 'Woon Expertise', 'Bargelaan 25', '2333 CT Leiden'),
+(199, 2988, 'KamerGemak', 'Diefsteeg 17', '2311 TW Leiden'),
+(823, 2564, 'HuisVinder', 'Oude Rijn 41', '2312 HG Leiden'),
+(982, 3002, 'De Huurdbaas', 'Vismarkt 10', '2332 LJ Leiden'),
+(601, 7997, 'Woning Wereld', 'Kerkstraat 7', '2312 BH Leiden'),
+(428, 5666, 'Huis Huren', 'Nieuwstraat 14', '2315 EA Leiden'),
+(695, 2999, 'De Makelaar', 'Schelpenkade 9', '2333 ZZ Leiden'),
+(185, 3575, 'Huur Expert', 'Langegracht 5', '2312 VA Leiden'),
+(437, 5455, 'Huur Winkel', 'Molenstraat 12', '2315 JK Leiden'),
+(374, 9658, 'Woon Expertise', 'Achterom 8', '2311 TV Leiden'),
+(805, 5425, 'KamerGemak', 'Vestestraat 16', '2312 SH Leiden'),
+(249, 3201, 'HuisVinder', 'Hoge Woerd 20', '2312 HJ Leiden');
 

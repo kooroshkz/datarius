@@ -7,28 +7,18 @@ HAVING num_tenants > 2;
 The HAVING clause filters the results to include only those job categories with more than two tenants. */
 
 -- Set operation (UNION, INTERSECT, EXCEPT):
---UNION
-SELECT name FROM Landlords
-UNION
-SELECT name FROM Tenants;
-/* This query retrieves the names of individuals who are either landlords or tenants.
-It returns a list of all unique names from both tables so we can say those are
-our platform real live users. */
-
--- EXCEPT
-SELECT name
+SELECT lssn, name
 FROM Landlords
-EXCEPT
-SELECT name
-FROM Tenants;
-/* This query retrieves the names of individuals who are landlords but not tenants.
-It returns a list of names belonging to individuals who are landlords but are not listed as tenants in the database.*/
-
--- INTERSECT
-SELECT name FROM Landlords
-INTERSECT
-SELECT name FROM Tenants;
-/* This query retrieves the names of individuals who are both landlords and tenants. */
+WHERE lssn IN (
+SELECT lssn FROM Property_Manages
+WHERE postcode LIKE '%Leiden%')
+UNION
+SELECT tssn, name
+FROM Tenants
+WHERE cid IN (
+SELECT cid FROM Contracts
+WHERE postcode LIKE '%Leiden%');
+/* Select the landlords who own properties in Leiden and tenants who live in Leiden */
 
 -- Nested query or correlation
 SELECT paddress, rent
@@ -55,3 +45,14 @@ SELECT paddress, postcode
 FROM Property_Manages
 WHERE postcode LIKE '2333%';
 /* This query retrieves the postcodes of properties that are located in Leiden Bio Science Park */
+
+
+-- First challenging query
+SELECT l.name, AVG(pm.rent) AS average_rent
+FROM Landlords l
+JOIN Property_Manages pm ON l.lssn = pm.lssn
+GROUP BY l.name;
+/*This query will help identify the landlords who manages properties with the highest average rent,
+which can help us find lucrative property management opportunities.*/
+
+
