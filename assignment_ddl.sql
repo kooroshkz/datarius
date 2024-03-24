@@ -1,8 +1,3 @@
---TODO
---add example entries using copilot/gpt/github dataset
-
---enable system to fill tables with csv datas
-.mode csv
 
 --create table for landlords
 DROP TABLE IF EXISTS Landlords;
@@ -72,7 +67,6 @@ INSERT INTO Tenants (tssn, name, job, phone, email) VALUES
 (569834,'Benjamin Wright','Programmer',065348921,'benjamin.wright@email.com'),
 (745892,'Evelyn Scott','Artist',068734291,'evelyn.scott@email.com');
 
-
 --WEAK ENTITY SET
 DROP TABLE IF EXISTS EmergencyContacts;
 CREATE TABLE EmergencyContacts(
@@ -118,17 +112,13 @@ PRIMARY KEY(paddress, postcode));
 
 --use inheritance to create flats and houses (IS-A relationship with Property_Manages)
 
---(COMMENT TO TEAM) I also added the floor attribute to distingish it from
---houses
+
 
 
 --IS A RELATIONSHIP
 --flats have also a floor number and own kitchen
 
 --houses have a garden and garage
---TODO explanation or different implementation needed
--- for cover and non-overlap
---see assignment description for details
 
 
 DROP TABLE IF EXISTS Flats;
@@ -196,25 +186,16 @@ INSERT INTO Houses (paddress, postcode, garden, garage) VALUES
 ('Breestraat 9','2311 AA Leiden',1,0);
 
 
---now we model relationships form the ER Diagram
-
-
---WEAK ENTITY SET
---landlords manage Property_Manages
-
-
 --modify the property to model 1 to many
 --relationship with landlords
 ALTER TABLE Property_Manages
 ADD COLUMN lssn INTEGER;
 
 
-
-
 --SELF-JOIN with roles
 --resident assistants and residents (for tenants)
 --there is an RA for a certain group of tenants
---TODO comment needed
+
 DROP TABLE IF EXISTS Assists;
 CREATE TABLE Assists(
 resident_assistant_ssn INTEGER,
@@ -234,9 +215,7 @@ FOREIGN KEY(resident_ssn) REFERENCES Tenants(tssn));
 --that is why we alter the table tenants instead of 
 --adding tssn to Contracts
 
---TODO explanation needed why its a total participation
---and key constraint instead of just a key constraint
-
+--TERNARY RELATIONSHIP
 DROP TABLE IF EXISTS Contracts;
 CREATE TABLE Contracts(
 cid INTEGER PRIMARY KEY,
@@ -283,10 +262,6 @@ INSERT INTO Property_Manages (paddress, postcode, rent, rooms, is_furnished, lss
 ('Vestestraat 16','2312 SH Leiden',940,2,1,5425,805),
 ('Hoge Woerd 20','2312 HJ Leiden',950,2,1,3201,249);
 
-
-
-
-
 INSERT INTO Contracts (cid, lssn, a_name) VALUES 
 (538,3001,'De Huurbaas'),
 (714,2564,'Woning Wereld'),
@@ -309,7 +284,3 @@ INSERT INTO Contracts (cid, lssn, a_name) VALUES
 (805,5425,'KamerGemak'),
 (249,3201,'HuisVinder');
 
-
---bonus things
---TERNARY RELATIONSHIP
---TODO (optional)
