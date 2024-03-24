@@ -38,37 +38,27 @@ cid INTEGER,
 FOREIGN KEY (cid)
 REFERENCES Contracts(cid));
 
-INSERT INTO Tenants (tssn, name, job, phone, email) VALUES 
-(948343,'John Doe','Student',068346234,'j.doe@email.com'),
-(235786,'Mary Smith','Programmer',067892345,'mary.smith@email.com'),
-(674821,'David Johnson','Student',065432789,'david.johnson@email.com'),
-(389765,'Emily Brown','Student',068947123,'emily.brown@email.com'),
-(546278,'Emma Wilson','Lawyer',064512378,'emmawilson@email.com'),
-(123590,'Daniel Moore','Chef',067823456,'danielmoore@email.com'),
-(789452,'Christopher Anderson','Student',062378945,'christopher.anderson@email.com'),
-(982345,'Samantha Martinez','Student',069874512,'samantha.martinez@email.com'),
-(456783,'James Thompson','Programmer',061234567,'james.thompson@email.com'),
-(879234,'Amanda Davis','Student',068735624,'amanda.davis@email.com'),
-(234568,'Robert Rodriguez','Teacher',065498712,'robert.rodriguez@email.com'),
-(784512,'Olivia Garcia','Student',063472189,'olivia.garcia@email.com'),
-(325478,'Daniel Hernandez','Programmer',064897321,'daniel.hernandez@email.com'),
-(657894,'Isabella Lopez','Artist',067382945,'isabella.lopez@email.com'),
-(347865,'William Martinez','Programmer',062345671,'william.martinez@email.com'),
-(219873,'Ava Gonzalez','Student',069845231,'ava.gonzalez@email.com'),
-(568912,'Sophia Perez','Student',068734512,'sophia.perez@email.com'),
-(456789,'Alexander Wilson','Student',065493821,'alexander.wilson@email.com'),
-(678945,'Mia Moore','Student',064235789,'mia.moore@email.com'),
-(198273,'Jacob Jackson','Student',067894512,'jacob.jackson@email.com'),
-(567823,'Charlotte White','Student',062348971,'charlotte.white@email.com'),
-(124578,'Ethan Thompson','Student',064897312,'ethan.thompson@email.com'),
-(984512,'Emma Harris','Student',067823415,'emma.harris@email.com'),
-(756498,'Liam Clark','Student',063497812,'liam.clark@email.com'),
-(123456,'Sophia Lewis','Artist',065498732,'sophia.lewis@email.com'),
-(356782,'Lucas Lee','Programmer',069873421,'lucas.lee@email.com'),
-(653847,'Avery Taylor','Artist',063489127,'avery.taylor@email.com'),
-(978234,'Harper King','Programmer',062394871,'harper.king@email.com'),
-(569834,'Benjamin Wright','Programmer',065348921,'benjamin.wright@email.com'),
-(745892,'Evelyn Scott','Artist',068734291,'evelyn.scott@email.com');
+INSERT INTO Tenants (tssn, name, job, phone, email, cid) VALUES 
+(948343,'John Doe','Student',068346234,'j.doe@email.com', 538),
+(235786,'Mary Smith','Programmer',067892345,'mary.smith@email.com', 714),
+(674821,'David Johnson','Student',065432789,'david.johnson@email.com', 269),
+(389765,'Emily Brown','Student',068947123,'emily.brown@email.com', 785),
+(546278,'Emma Wilson','Lawyer',064512378,'emmawilson@email.com', 413),
+(123590,'Daniel Moore','Chef',067823456,'danielmoore@email.com', 626),
+(789452,'Christopher Anderson','Student',062378945,'christopher.anderson@email.com', 821),
+(982345,'Samantha Martinez','Student',069874512,'samantha.martinez@email.com', 472),
+(456783,'James Thompson','Programmer',061234567,'james.thompson@email.com', 199),
+(879234,'Amanda Davis','Student',068735624,'amanda.davis@email.com', 823),
+(234568,'Robert Rodriguez','Teacher',065498712,'robert.rodriguez@email.com', 982),
+(784512,'Olivia Garcia','Student',063472189,'olivia.garcia@email.com', 601),
+(325478,'Daniel Hernandez','Programmer',064897321,'daniel.hernandez@email.com', 428),
+(657894,'Isabella Lopez','Artist',067382945,'isabella.lopez@email.com', 695),
+(347865,'William Martinez','Programmer',062345671,'william.martinez@email.com', 185),
+(219873,'Ava Gonzalez','Student',069845231,'ava.gonzalez@email.com', 742),
+(568912,'Sophia Perez','Student',068734512,'sophia.perez@email.com', 437),
+(456789,'Alexander Wilson','Student',065493821,'alexander.wilson@email.com', 374),
+(678945,'Mia Moore','Student',064235789,'mia.moore@email.com', 805),
+(198273,'Jacob Jackson','Student',067894512,'jacob.jackson@email.com', 249);
 
 --WEAK ENTITY SET
 DROP TABLE IF EXISTS EmergencyContacts;
@@ -78,6 +68,18 @@ CREATE TABLE EmergencyContacts(
     lssn INTEGER UNIQUE,
     PRIMARY KEY(ephone, lssn),
     FOREIGN KEY(lssn) REFERENCES Landlords(lssn) ON DELETE CASCADE);
+
+INSERT INTO EmergencyContacts (ename, ephone, lssn) VALUES 
+    ('John Doe', 1234567890, 2984),
+    ('Mary Smith', 2345678901, 2985),
+    ('David Johnson', 3456789012, 2986),
+    ('Emily Brown', 4567890123, 2987),
+    ('Emma Wilson', 5678901234, 2988),
+    ('Daniel Moore', 6789012345, 2989),
+    ('Christopher Anderson', 7890123456, 2990),
+    ('Samantha Martinez', 8901234567, 2991),
+    ('James Thompson', 9012345678, 8392),
+    ('Amanda Davis', 1234567891, 2993);
 
 --emails are set to not null because we need them for communication
 --as well as names
@@ -208,6 +210,17 @@ PRIMARY KEY(resident_assistant_ssn, resident_ssn),
 FOREIGN KEY(resident_assistant_ssn) REFERENCES Tenants(tssn),
 FOREIGN KEY(resident_ssn) REFERENCES Tenants(tssn));
 
+INSERT INTO Assists (resident_assistant_ssn, resident_ssn) VALUES 
+(948343, 235786),
+(674821, 389765),
+(546278, 123590),
+(789452, 982345),
+(456783, 879234),
+(234568, 784512),
+(325478, 657894),
+(347865, 219873),
+(568912, 456789),
+(678945, 198273);
 
 --AGGREGATION
 --a landlord can have multiple tenants for once contract
