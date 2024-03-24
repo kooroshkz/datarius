@@ -1,4 +1,3 @@
-
 --create table for landlords
 DROP TABLE IF EXISTS Landlords;
 CREATE TABLE Landlords(
@@ -33,7 +32,11 @@ DROP TABLE IF EXISTS Tenants;
 CREATE TABLE Tenants(
 tssn INTEGER PRIMARY KEY, 
 name TEXT NOT NULL, 
-job TEXT, phone INTEGER, email TEXT NOT NULL);
+job TEXT, phone INTEGER, 
+email TEXT NOT NULL, 
+cid INTEGER,
+FOREIGN KEY (cid)
+REFERENCES Contracts(cid));
 
 INSERT INTO Tenants (tssn, name, job, phone, email) VALUES 
 (948343,'John Doe','Student',068346234,'j.doe@email.com'),
