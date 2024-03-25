@@ -30,7 +30,12 @@ WHERE rent > (
 /* This query retrieves the address and rents of properties where the rent is higher than the average rent of all properties. */
 
 -- Aggregation (MAX, AVG, SUM, COUNT)
-SELECT MAX(rent) AS max_rent, MIN(rent) AS min_rent, AVG(rent) AS avg_rent, SUM(rent) AS total_rent FROM Property_Manages;
+SELECT 
+    MAX(rent) AS max_rent,
+    MIN(rent) AS min_rent,
+    AVG(rent) AS avg_rent,
+    SUM(rent) AS total_rent 
+FROM Property_Manages;
 /* This query retrieves the maximum, minimum, average, and total rent of all properties. */
 
 -- Query over multiple tables (JOIN)
@@ -41,10 +46,12 @@ JOIN Property_Manages ON Landlords.lssn = Property_Manages.lssn;
 with addresses of thir properties where the lssn matches between the two tables. */
 
 -- LIKE (string matching)
-SELECT paddress, postcode
-FROM Property_Manages
-WHERE postcode LIKE '2333%';
-/* This query retrieves the postcodes of properties that are located in Leiden Bio Science Park */
+SELECT lssn, name
+FROM Landlords
+WHERE lssn IN (
+SELECT lssn FROM EmergencyContacts E
+WHERE E.ename LIKE 'E%');
+/* Select lssn and name of landlords who have an emergency contact that has a name that starts with E. */
 
 
 -- First challenging query
@@ -55,4 +62,13 @@ GROUP BY l.name;
 /*This query will help identify the landlords who manages properties with the highest average rent,
 which can help us find lucrative property management opportunities.*/
 
-
+-- Second challenging query
+SELECT tssn, name
+FROM Tenants
+WHERE cid IN 
+(SELECT cid FROM Property_Manages
+WHERE (paddress, postcode) IN 
+(SELECT paddress, postcode 
+FROM Flats
+WHERE own_kitchen = TRUE));
+/* Select ssn and names of tenants who live in flats with their own kitchen. */

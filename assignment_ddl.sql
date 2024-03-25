@@ -81,9 +81,7 @@ INSERT INTO EmergencyContacts (ename, ephone, lssn) VALUES
     ('James Thompson', 9012345678, 8392),
     ('Amanda Davis', 1234567891, 2993);
 
---emails are set to not null because we need them for communication
---as well as names
-
+--emails are set to not null because we need them for communication as well as names
 
 --create table for housing agencies
 DROP TABLE IF EXISTS HousingAgency;
@@ -104,7 +102,6 @@ INSERT INTO HousingAgency (a_name, website, area) VALUES
 ('KamerGemak', 'www.kamergemak.nl', 'Leiden Groenoord'),
 ('HuisVinder', 'www.huisvinder.nl', 'Leiden Cronestein');
 
-
 --create table with property attributes
 DROP TABLE IF EXISTS Property_Manages;
 CREATE TABLE Property_Manages(
@@ -113,18 +110,9 @@ rent INTEGER, rooms INTEGER,
 is_furnished BOOLEAN,
 PRIMARY KEY(paddress, postcode));
 
-
-
 --use inheritance to create flats and houses (IS-A relationship with Property_Manages)
-
-
-
-
 --IS A RELATIONSHIP
---flats have also a floor number and own kitchen
-
---houses have a garden and garage
-
+--flats have also a floor number and own kitchen and houses have a garden and garage
 
 DROP TABLE IF EXISTS Flats;
 CREATE TABLE Flats(
@@ -156,8 +144,6 @@ INSERT INTO Flats (paddress, postcode, floor_number, own_kitchen) VALUES
 ('Zoeterwoudsesingel 36','2313 DW Leiden',3,1),
 ('Vrijheidslaan 65','2321 JR Leiden',1,1),
 ('Kort Rapenburg 2','2311 GC Leiden',2,1);
-
-
 
 DROP TABLE IF EXISTS Houses;
 CREATE TABLE Houses(
@@ -199,8 +185,7 @@ REFERENCES Landlords(lssn);
 
 
 --SELF-JOIN with roles
---resident assistants and residents (for tenants)
---there is an RA for a certain group of tenants
+--resident assistants and residents (for tenants), there is an RA for a certain group of tenants
 
 DROP TABLE IF EXISTS Assists;
 CREATE TABLE Assists(
@@ -244,10 +229,7 @@ FOREIGN KEY(lssn) REFERENCES Landlords(lssn),
 FOREIGN KEY(a_name) REFERENCES HousingAgency(a_name)
 FOREIGN KEY(paddress, postcode) REFERENCES Property_Manages(paddress, postcode));
 
-
 --combined total participation and key constraint
-
-
 
 INSERT INTO Property_Manages (paddress, postcode, rent, rooms, is_furnished, lssn) VALUES 
 ('Steenstraat 35','2312 BT Leiden',845,2,1,1195),
@@ -293,4 +275,3 @@ INSERT INTO Contracts (cid, lssn, a_name, paddress, postcode) VALUES
 (374, 9658, 'Woon Expertise', 'Achterom 8', '2311 TV Leiden'),
 (805, 5425, 'KamerGemak', 'Vestestraat 16', '2312 SH Leiden'),
 (249, 3201, 'HuisVinder', 'Hoge Woerd 20', '2312 HJ Leiden');
-
