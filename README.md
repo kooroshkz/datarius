@@ -1,4 +1,4 @@
-# Datarious (Prototype)
+# Datarius (Prototype)
 
 The Datarious Project is focused on designing a database using data scraped from the ["Pararius"](https://www.pararius.com/english) website to analyze housing challenges throughout the Netherlands.
 
